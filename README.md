@@ -2,13 +2,13 @@
 Exercise 1  in Image-Processing course @ huji
 
 ## Equalize Grayscale images
-![image](https://user-images.githubusercontent.com/71530633/200360447-4bd4e680-32e3-4aca-928d-64141eb4b66c.png)
 ![image](https://user-images.githubusercontent.com/71530633/200360663-369ad416-3e85-4346-9f8b-9d11fbd1388f.png)
+![image](https://user-images.githubusercontent.com/71530633/201111630-cc27c05e-eaa1-4e76-89c8-e2e2bd96745c.png)
+
 
 ## Equalize RGB images
-
-![image](https://user-images.githubusercontent.com/71530633/200360801-d6d03b50-280a-4de2-918d-1c1f013cc552.png)
-![image](https://user-images.githubusercontent.com/71530633/200360759-5106dfc6-b3be-4692-9265-a8daeaa9b2aa.png)
+![image](https://user-images.githubusercontent.com/71530633/201111323-bf271042-f565-4b95-b9f3-227cbe75a774.png)
+![image](https://user-images.githubusercontent.com/71530633/201111388-2e5d6f9d-096d-46a2-8870-21e19b90a1c2.png)
 
 ## Qauntization on Grayscale
 ![image](https://user-images.githubusercontent.com/71530633/200362233-30682f4e-4079-4511-ad8b-bcf89d052098.png)
@@ -16,5 +16,4 @@ Exercise 1  in Image-Processing course @ huji
 
 ## Qauntization on RGB
 ![image](https://user-images.githubusercontent.com/71530633/200364368-2449e7ca-8a51-4b32-a663-a7643f2b1616.png)
-
 ![image](https://user-images.githubusercontent.com/71530633/200364096-fd0861ff-a82d-4f12-90e5-da776917a463.png)
