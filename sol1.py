@@ -60,11 +60,14 @@ def histogram_equalize(im_orig):
     :param im_orig: Input float64 [0,1] image
     :return: [im_eq, hist_orig, hist_eq]
     """
+    # check if im_orig is RGB image
     if im_orig.ndim == 3:
         im_origYIQ = rgb2yiq(im_orig)
         im_eq_Y, hist_orig, hist_eq = equalize_grayscale(im_origYIQ[:, :, 0])
         im_origYIQ[:, :, 0] = im_eq_Y
         return [yiq2rgb(im_origYIQ), hist_orig, hist_eq]
+
+    # else equalize grayscale image
     return equalize_grayscale(im_orig)
 
 
@@ -76,7 +79,7 @@ def equalize_grayscale(im_orig):
     """
     # Compute the image histogram
     new_im_orig = im_orig * MAX_PIXEL_VAL
-    hist_orig, bounds = np.histogram(new_im_orig, bins=256)
+    hist_orig, bounds = np.histogram(new_im_orig, bins=256, range=[0, 255])
     # Compute the cumulative histogram.
     cum_hist = np.cumsum(hist_orig)
     #  get_first_non_zero_gray_level_in_histogram
@@ -86,11 +89,11 @@ def equalize_grayscale(im_orig):
     if dom == 0:
         return [im_orig, hist_orig, hist_orig]
     # compute look-up table T
-    T = np.ceil(255 * (cum_hist - cum_hist[m]) / dom)
+    T = np.round(255 * (cum_hist - cum_hist[m]) / dom)
     # compute new image as 1-D array by the LUT T
     new_im = T[new_im_orig.flatten().astype(int)]
     # compute the equalized histogram
-    hist_eq, new_bounds = np.histogram(new_im, bins=256)
+    hist_eq, _ = np.histogram(new_im, bins=256, range=[0, 255])
     # compute the final equalized image as 2D array
     im_eq = (new_im / MAX_PIXEL_VAL).reshape(im_orig.shape)
     return [im_eq, hist_orig, hist_eq]
@@ -132,7 +135,7 @@ def quantize_grayscale(im_orig, n_quant, n_iter):
     # convert image to [0,255] scale
     new_im_orig = im_orig * MAX_PIXEL_VAL
     # Computing the image histogram
-    h, bins = np.histogram(new_im_orig, bins=256)
+    h, bins = np.histogram(new_im_orig, bins=256,range=[0,255])
     # Computing the initial segments division
     Z = compute_Z(h, n_quant)
     # Initializing empty Q array to update and the error list
@@ -148,10 +151,10 @@ def quantize_grayscale(im_orig, n_quant, n_iter):
         for j in range(n_quant):
             g = np.arange(np.floor(Z[j]) + 1, np.floor(Z[j + 1]) + 1).astype(int)
             hg = h[g]
-            Q[j] = (np.sum(g * hg) // np.sum(hg))
+            Q[j] = (np.sum(g * hg) / np.sum(hg))
             iter_error += np.sum(((Q[j] - g) ** 2) * hg)
             if j > 0:
-                Z[j] = (Q[j - 1] + Q[j]) // 2
+                Z[j] = (Q[j - 1] + Q[j]) / 2
         # Check if we achieved convergence
         if np.array_equal(Z, Z_before):
             break
@@ -169,7 +172,7 @@ def quantize_grayscale(im_orig, n_quant, n_iter):
 def get_quantization_mapping(Z, Q, n_quant):
     """
     :param Z: Z array, the borders which divide the histograms into segments
-    :param Q: Q array, the values to which each of the segments’ intensities will map
+    :param Q: Q array, the values to which each of the segments intensities will map
     :param n_quant: number of gray levels
     :return: mapping array from intensity level to corresponding q_i in Q
     """
