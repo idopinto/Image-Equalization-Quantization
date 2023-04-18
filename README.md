@@ -1,5 +1,7 @@
-# Image-Equalization
-Exercise 1  in Image-Processing course @ huji
+## Image Processing
+This repository includes two functions for image processing:
+  - Histogram Equalization
+  - Optimal Quantization
 
 ## Equalize Grayscale images
 ![image](https://user-images.githubusercontent.com/71530633/200360663-369ad416-3e85-4346-9f8b-9d11fbd1388f.png)
